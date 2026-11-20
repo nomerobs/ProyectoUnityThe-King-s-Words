@@ -1,14 +1,15 @@
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class PlayerMovment : MonoBehaviour
 {
-    public Rigidbody RB;
+    public Rigidbody RB;              
     private InputSystem_Actions input;
     public float forwardAcel;
     public float reverseAcel;
     public float maxSpeed;
     public float TurnStrength;
+
+    private Vector2 dir;
 
     private void Awake()
     {
@@ -16,24 +17,25 @@ public class PlayerMovment : MonoBehaviour
         input.Enable();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        dir = input.Player.Move.ReadValue<Vector2>();
+
+        float turn = -dir.x * TurnStrength * Time.deltaTime;
+        transform.Rotate(0f, 0f, turn);
+
+        // Seguir a la esfera
         transform.position = RB.transform.position;
     }
+
     private void FixedUpdate()
     {
-        Vector2 dir = input.Player.Move.ReadValue<Vector2>();
+        float accel = dir.y > 0 ? forwardAcel : reverseAcel;
 
-        RB.AddForce(transform.forward * forwardAcel * dir.y * 1000f);
-
-        RB.MoveRotation(
-    RB.rotation * Quaternion.Euler(
-        0f,
-        dir.x * TurnStrength * Time.fixedDeltaTime,
-        0f
-    )
-);
+        if (RB.linearVelocity.magnitude < maxSpeed)
+        {
+            RB.AddForce(transform.up * dir.y * accel * 1000f);
+        }
     }
+
 }
