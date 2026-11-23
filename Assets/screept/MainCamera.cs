@@ -2,16 +2,19 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
 
-public class Camera : MonoBehaviour
+public class MainCamera : MonoBehaviour
 {
     public Rigidbody RB; 
     private InputSystem_Actions input;
     float sensibility = 10;
+    internal static UnityEngine.Camera main;
 
     void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.ForceSoftware);
+
     }
     private void Awake()
     {
