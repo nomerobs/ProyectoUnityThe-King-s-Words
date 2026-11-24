@@ -1,30 +1,31 @@
-
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class MouseDrag : MonoBehaviour
+public class MouseDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    private Vector3 mOffset;
-    private float mZCoord;
+    private RectTransform rectTransform;
+    private Canvas canvas;
 
-    private void OnMouseDown()
+    private void Awake()
     {
-        mZCoord = Camera.main.WorldToScreenPoint(
-            transform.position
-        ).z;
-
-        mOffset = transform.position - GetWorldMousePos();
+        rectTransform = GetComponent<RectTransform>();
+        canvas = GetComponentInParent<Canvas>();
     }
 
-    private Vector3 GetWorldMousePos()
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        Vector3 mousePoint = Input.mousePosition;
-        mousePoint.z = mZCoord;
-
-        return Camera.main.ScreenToWorldPoint(mousePoint);
+        // Opcional: lógica al empezar a arrastrar
     }
 
-    private void OnMouseDrag()
+    public void OnDrag(PointerEventData eventData)
     {
-        transform.position = GetWorldMousePos() + mOffset;
+        if (canvas == null) return;
+
+        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        // Opcional: lógica al soltar
     }
 }

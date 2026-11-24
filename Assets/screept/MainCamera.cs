@@ -9,13 +9,6 @@ public class MainCamera : MonoBehaviour
     float sensibility = 10;
     internal static UnityEngine.Camera main;
 
-    void Start()
-    {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.ForceSoftware);
-
-    }
     private void Awake()
     {
         input = new InputSystem_Actions();
