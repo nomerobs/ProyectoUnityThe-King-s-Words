@@ -4,8 +4,10 @@ using UnityEngine.SceneManagement;
 public class LetterCatch : MonoBehaviour
 {
     private InputSystem_Actions input;
-   public GameManager manager;
+    public GameManager manager;
+    public GameObject MiniGame;
 
+    public bool good;
     private void Awake()
     {
         input = new InputSystem_Actions();
@@ -20,10 +22,13 @@ public class LetterCatch : MonoBehaviour
     {
         if (input.Player.Attack.IsPressed())
         {
-            
-            gameObject.SetActive(false);
             manager.minigame();
+            MiniGame.SetActive(true);
 
         }
+    }
+    public void HideActivity()
+    {
+        MiniGame.SetActive(false);
     }
 }

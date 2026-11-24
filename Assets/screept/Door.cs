@@ -2,13 +2,20 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    public GameManager manager;
+    public LetterCatch letter;
+
+    private MeshRenderer meshRenderer;
+    private Collider hitbox;
+
+    private void Awake()
+    {
+        meshRenderer = GetComponent<MeshRenderer>();
+        hitbox = GetComponent<Collider>();
+    }
 
     private void Update()
     {
-        if (manager.IsCompleteW)
-        {
-            gameObject.SetActive(false);
-        }
+        meshRenderer.enabled = !letter.good;
+        hitbox.enabled = !letter.good;
     }
 }

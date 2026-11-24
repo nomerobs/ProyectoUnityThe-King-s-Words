@@ -6,18 +6,18 @@ public class ZoneChecker : MonoBehaviour
     [SerializeField] private RectTransform zone;
     [SerializeField] private List<RectTransform> requiredWords;
     [SerializeField] private List<RectTransform> forbiddenWords;
-    public GameManager manager;
+    public LetterCatch letter;
 
 
     public void CheckWords()
     {
-        manager.IsCompleteW = true;
+        letter.good = true;
 
         foreach (var w in requiredWords)
-            if (!IsInside(w)) manager.IsCompleteW = false;
+            if (!IsInside(w)) letter.good = false;
 
         foreach (var w in forbiddenWords)
-            if (IsInside(w)) manager.IsCompleteW = false;
+            if (IsInside(w)) letter.good = false;
     }
 
     private bool IsInside(RectTransform word)
